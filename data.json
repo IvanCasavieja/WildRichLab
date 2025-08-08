@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Tarjeta Interactiva",
+    "thumbnail": "assets/Credito-Tarjeta.png",
+    "url": "rich/tarjeta",
+    "files": {
+      "html": "tarjeta.html",
+      "css": "tarjeta.css",
+      "js": "tarjeta.js"
+    }
+  },
+  {
+    "id": 2,
+    "title": "Candy Crush Mini Game",
+    "thumbnail": "assets/RichCandyCrush.png",
+    "url": "rich/candy-crush",
+    "files": {
+      "html": "candy-crush.html",
+      "css": "candy-crush.css",
+      "js": "candy-crush.js"
+    }
+  },
+  {
+    "id": 3,
+    "title": "Editor de Brillo",
+    "thumbnail": "assets/EditorBrillo.png",
+    "url": "rich/editor-brillo",
+    "files": {
+      "html": "editor-brillo.html",
+      "css": "editor-brillo.css",
+      "js": "editor-brillo.js"
+    },
+    "requiredFiles": [
+      "assets/plantilla.png"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Switch Gif",
+    "thumbnail": "assets/gif-switch.png",
+    "url": "rich/gif-switch",
+    "files": {
+      "html": "gif-switch.html",
+      "css": "gif-switch.css",
+      "js": "gif-switch.js"
+    }
+  },
+  {
+    "id": 5,
+    "title": "Desbloqueo por Voz",
+    "thumbnail": "assets/desbloquear-voz.png",
+    "url": "rich/desbloqueo-voz",
+    "files": {
+      "html": "desbloqueo-voz.html",
+      "css": "desbloqueo-voz.css",
+      "js": "desbloqueo-voz.js"
+    }
+  },
+  {
+    "id": 6,
+    "title": "Sopla",
+    "thumbnail": "assets/sopla.png",
+    "url": "rich/sopla",
+    "files": {
+      "html": "sopla.html",
+      "css": "sopla.css",
+      "js": "sopla.js"
+    }
+  },
+  {
+    "id": 7,
+    "title": "Recomendados Farma",
+    "thumbnail": "assets/farmashop.png",
+    "url": "rich/formulario-reco-farma",
+    "files": {
+      "html": "formulario-reco-farma.html",
+      "css": "formulario-reco-farma.css",
+      "js": "formulario-reco-farma.js"
+    }
+  }
+]

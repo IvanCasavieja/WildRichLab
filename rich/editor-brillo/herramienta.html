@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Calibrador Matrix3D</title>
+<style>
+    body {
+        background: #111;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+    #canvas {
+        border: 2px solid #fff;
+        cursor: crosshair;
+        margin-top: 20px;
+    }
+    #output {
+        margin-top: 20px;
+        background: #222;
+        padding: 10px;
+        border-radius: 5px;
+        width: 90%;
+        max-width: 800px;
+        font-size: 14px;
+        white-space: pre-wrap;
+    }
+</style>
+</head>
+<body>
+<h2>Haz clic en las 4 esquinas del botón (arriba-izq, arriba-der, abajo-der, abajo-izq)</h2>
+<canvas id="canvas" width="1000" height="600"></canvas>
+<div id="output">Esperando clics...</div>
+
+<script>
+// CONFIGURA TU IMAGEN
+const imageSrc = "banner_base.png"; // <-- pon tu imagen base aquí
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const output = document.getElementById("output");
+
+const img = new Image();
+img.src = imageSrc;
+img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+let clicks = [];
+canvas.addEventListener("click", (e) => {
+    if (clicks.length >= 4) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    clicks.push({x, y});
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fill();
+
+    if (clicks.length === 4) {
+        output.innerText = "Calculando transformación...";
+        calcularMatrix();
+    } else {
+        output.innerText = `Punto ${clicks.length} capturado: (${x.toFixed(1)}, ${y.toFixed(1)})`;
+    }
+});
+
+function calcularMatrix() {
+    // Puntos destino (los clics)
+    const dst = clicks;
+    // Puntos origen (rectángulo del slider)
+    const w = 100, h = 200;
+    const src = [
+        {x: 0, y: 0},
+        {x: w, y: 0},
+        {x: w, y: h},
+        {x: 0, y: h}
+    ];
+
+    const matrix = getPerspectiveTransform(src, dst);
+    output.innerText = `Transform (CSS):\ntransform: matrix3d(${matrix.join(",")});`;
+}
+
+// Calcular matriz perspectiva (basado en OpenCV.js simplificado)
+function getPerspectiveTransform(src, dst) {
+    function adjugate(m) {
+        return [
+            m[4]*m[8]-m[5]*m[7], m[2]*m[7]-m[1]*m[8], m[1]*m[5]-m[2]*m[4],
+            m[5]*m[6]-m[3]*m[8], m[0]*m[8]-m[2]*m[6], m[2]*m[3]-m[0]*m[5],
+            m[3]*m[7]-m[4]*m[6], m[1]*m[6]-m[0]*m[7], m[0]*m[4]-m[1]*m[3]
+        ];
+    }
+    function multiply(a,b){
+        const res=new Array(9);
+        for(let i=0;i<3;i++)for(let j=0;j<3;j++){
+            res[i*3+j]=0;
+            for(let k=0;k<3;k++) res[i*3+j]+=a[i*3+k]*b[k*3+j];
+        }
+        return res;
+    }
+    function basisToPoints(points){
+        const m = [
+            points[0].x, points[1].x, points[2].x,
+            points[0].y, points[1].y, points[2].y,
+            1,1,1
+        ];
+        const v = [points[3].x, points[3].y,1];
+        const adj = adjugate(m);
+        const scale = adj[0]*v[0]+adj[1]*v[1]+adj[2]*v[2];
+        for(let i=0;i<9;i++) m[i]*=scale;
+        return m;
+    }
+    const srcMat = basisToPoints(src);
+    const dstMat = basisToPoints(dst);
+    const M = multiply(dstMat, adjugate(srcMat));
+    return [
+        M[0],M[3],0,M[6],
+        M[1],M[4],0,M[7],
+        0,0,1,0,
+        M[2],M[5],0,M[8]
+    ];
+}
+</script>
+</body>
+</html>

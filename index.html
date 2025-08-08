@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ivan Casavieja">
+    <meta name="description" content="Rich Lab: Explora, experimenta y edita rich media interactivos listos para tus campañas.">
+    <meta name="theme-color" content="#ff6a00">
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <title>RichLab</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="#" class="logo-container" id="home-link">
+            <img src="assets/logo.png" alt="Rich Lab Logo" class="logo">
+            <h1>RichLab</h1>
+        </a>
+    </nav>
+
+    <!-- GALERÍA -->
+    <section class="gallery">
+        <h2>Explora nuestros Rich Media</h2>
+        <div class="gallery-grid"></div>
+    </section>
+
+    <!-- EDITOR -->
+    <section id="viewer" class="hidden">
+        <div class="viewer-header">
+            <button id="back-to-gallery">← Volver</button>
+            <h2 id="viewer-title">Rich Media</h2>
+            <div>
+                <button id="download-assets" class="hidden">Descargar Plantilla</button>
+                <button id="download-zip">Descargar ZIP</button>
+            </div>
+        </div>
+        <div class="editor-container">
+            <!-- PANEL DE EDICIÓN -->
+            <div id="editor-panel">
+                <h3>Editar elementos</h3>
+                <div id="editor-fields"></div>
+            </div>
+            <!-- VISOR -->
+            <iframe id="viewer-frame"></iframe>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Redirección al inicio cuando se clickea el logo
+        document.getElementById('home-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.querySelector('.gallery').classList.remove('hidden');
+            document.getElementById('viewer').classList.add('hidden');
+            document.getElementById('viewer-frame').src = '';
+        });
+    </script>
+</body>
+</html>

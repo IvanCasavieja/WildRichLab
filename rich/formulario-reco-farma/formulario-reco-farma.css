@@ -1,0 +1,98 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.form-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  border-top: 8px solid #0072ce;
+  overflow: hidden;
+}
+
+.logo {
+  max-width: 150px;
+  margin-bottom: 15px;
+}
+
+.form-slider {
+  display: flex;
+  transition: transform 0.4s ease;
+  width: 500%; /* 5 slides (4 preguntas + 1 final) */
+}
+
+.slide {
+  width: 20%; /* Cada slide ocupa 1/5 */
+  flex-shrink: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 1.4rem;
+  color: #0072ce;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  background: #0072ce;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.option-btn:hover {
+  background: #005fa3;
+}
+
+.cta-btn {
+  background: #0072ce;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s ease;
+  margin-top: 15px;
+}
+
+.cta-btn:hover {
+  background: #005fa3;
+}
+
+/* Slide final más destacada */
+.final-slide {
+  background: #f8fbff;
+  border-radius: 8px;
+}
+
+.final-subtext {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 10px;
+}

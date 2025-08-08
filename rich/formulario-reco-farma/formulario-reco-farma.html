@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Farmashop</title>
+  <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script> <!-- Tracking Studio/DV360 -->
+  <link rel="stylesheet" href="formulario-reco-farma.css">
+</head>
+<body>
+  <div class="form-container">
+    <img src="logo-farma.png" alt="Farmashop" class="logo">
+    <div class="form-slider" id="form-slider">
+      <!-- Pregunta 1 -->
+      <div class="slide active">
+        <h2>¿Cómo describirías tu nivel de energía diario?</h2>
+        <button class="option-btn" data-value="baja">Baja</button>
+        <button class="option-btn" data-value="media">Media</button>
+        <button class="option-btn" data-value="alta">Alta</button>
+      </div>
+      <!-- Pregunta 2 -->
+      <div class="slide">
+        <h2>¿Te gustaría mejorar tu rutina de cuidado personal?</h2>
+        <button class="option-btn" data-value="piel">Sí, cuidado de la piel</button>
+        <button class="option-btn" data-value="cabello">Sí, cuidado del cabello</button>
+        <button class="option-btn" data-value="ambos">Ambos (piel y cabello)</button>
+      </div>
+      <!-- Pregunta 3 -->
+      <div class="slide">
+        <h2>¿Cómo es tu calidad de sueño?</h2>
+        <button class="option-btn" data-value="malo">Mala</button>
+        <button class="option-btn" data-value="regular">Regular</button>
+        <button class="option-btn" data-value="bueno">Buena</button>
+      </div>
+      <!-- Pregunta 4 -->
+      <div class="slide">
+        <h2>¿Qué productos te interesan más?</h2>
+        <button class="option-btn" data-value="vitaminas">Vitaminas y suplementos</button>
+        <button class="option-btn" data-value="belleza">Productos de belleza</button>
+        <button class="option-btn" data-value="bienestar">Bienestar y relajación</button>
+      </div>
+      <!-- Resultado final -->
+      <div class="slide final-slide">
+        <h2>¡Gracias por responder!</h2>
+        <p id="recommendation"></p>
+        <p class="final-subtext">Basado en tus respuestas, estos productos pueden ayudarte a mejorar tu bienestar.</p>
+        <button id="cta-btn" class="cta-btn">Explorar productos recomendados</button>
+      </div>
+    </div>
+  </div>
+  <script src="formulario-reco-farma.js"></script>
+</body>
+</html>

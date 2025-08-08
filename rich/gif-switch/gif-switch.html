@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Imagen a GIF</title>
+    <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+    <link rel="stylesheet" href="gif-switch.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Imagen inicial -->
+        <img id="preview-img" src="imagen-inicial.png" alt="Vista previa">
+
+        <!-- Botón para iniciar -->
+        <button id="switch-btn">¡Click para obtener!</button>
+
+        <!-- GIF intermedio con mensaje -->
+        <div id="loading-container" class="hidden">
+            <img id="gif-player" src="animacion.gif" alt="Animación">
+            <p id="loading-text">Espera mientras buscamos...</p>
+        </div>
+
+        <!-- Imagen final (descuento) -->
+        <img id="final-img" src="descuento.png" alt="Descuento" class="hidden">
+
+        <!-- Botón final -->
+        <button id="final-btn">¡Felicidades! Haz click para tu beneficio</button>
+    </div>
+    <script src="gif-switch.js"></script>
+</body>
+
+</html>

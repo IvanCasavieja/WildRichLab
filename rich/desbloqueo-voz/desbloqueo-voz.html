@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Desbloquea con tu voz</title>
+    <link rel="stylesheet" href="desbloqueo-voz.css">
+    <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>🎙️ Di <strong>"abrir"</strong> o <strong>"desbloquear"</strong> para abrir el candado</h2>
+        <div class="lock-container">
+            <img id="lock-img" src="candado-cerrado.png" alt="Candado">
+            <img id="tapador-img" src="tapador.png" alt="mitad de candado"></img>
+            <img id="key-img" src="llave.png" alt="Llave" class="hidden">
+        </div>
+        <button id="start-btn">Activar micrófono</button>
+        <button id="test-btn">Probar sin voz</button>
+        <p id="status-text">Esperando tu comando...</p>
+        <div id="discount-container" class="hidden">
+            <div id="discount-circle">
+                <span>-15%</span>
+                <p>¡Descuento desbloqueado!</p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Confeti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="desbloqueo-voz.js"></script>
+</body>
+
+</html>

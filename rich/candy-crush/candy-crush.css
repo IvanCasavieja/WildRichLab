@@ -1,0 +1,104 @@
+body {
+    background: #ffe6f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+#score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4081;
+    margin: 10px;
+}
+
+#game-container {
+    width: min(90vw, 600px);
+    height: min(90vw, 600px);
+    min-width: 300px;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2px;
+    background: #fff;
+    border: 5px solid #ff4081;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    position: relative;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff5f8;
+    position: relative;
+    overflow: hidden;
+}
+
+.cell img {
+    width: 90%;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+    position: relative;
+}
+
+.pressed img {
+    transform: scale(0.85);
+}
+
+#cta {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background: #ff4081;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+#cta:hover {
+    background: #e33670;
+}
+
+/* MANO TUTORIAL (ahora dentro del tablero) */
+#tutorial-hand {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: url('manoIcon.png') no-repeat center/contain;
+    z-index: 200;
+    animation: moveHand 2s infinite ease-in-out;
+    pointer-events: none;
+}
+
+/* Movimiento entre cuadros */
+@keyframes moveHand {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(120px) scale(1.05);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

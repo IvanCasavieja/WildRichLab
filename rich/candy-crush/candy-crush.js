@@ -1,0 +1,222 @@
+const gridSize = 4;
+const candies = ["osito.png", "banana.png", "fresa.png", "mora.png"];
+let grid = [];
+let score = 0;
+
+// Bloquear drag nativo
+document.addEventListener("dragstart", e => e.preventDefault());
+
+// Inicialización Enabler
+function enablerInitHandler() {
+    document.getElementById("cta").addEventListener("click", () => Enabler.exit('ClickThrough'));
+}
+if (Enabler.isInitialized()) enablerInitHandler();
+else Enabler.addEventListener(studio.events.StudioEvent.INIT, enablerInitHandler);
+
+// Crear el tablero
+function createBoard() {
+    const container = document.getElementById("game-container");
+    container.querySelectorAll(".cell").forEach(c => c.remove());
+    grid = [];
+    for (let i = 0; i < gridSize * gridSize; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        addRandomCandy(cell);
+        container.appendChild(cell);
+        grid.push(cell);
+    }
+    stabilizeBoard();
+    positionTutorialHand();
+}
+
+function addRandomCandy(cell) {
+    const candy = document.createElement("img");
+    candy.src = candies[Math.floor(Math.random() * candies.length)];
+    cell.appendChild(candy);
+}
+
+function stabilizeBoard() {
+    while (findMatches().length > 0) {
+        let matches = findMatches();
+        matches.forEach(i => {
+            let img = grid[i].querySelector("img");
+            if (img) img.remove();
+            addRandomCandy(grid[i]);
+        });
+    }
+}
+
+// Detectar matches
+function findMatches() {
+    let matched = [];
+    for (let r = 0; r < gridSize; r++) {
+        for (let c = 0; c < gridSize - 2; c++) {
+            let idx = r * gridSize + c;
+            let candy1 = grid[idx].querySelector("img")?.src;
+            let candy2 = grid[idx + 1].querySelector("img")?.src;
+            let candy3 = grid[idx + 2].querySelector("img")?.src;
+            if (candy1 && candy2 && candy3 && candy1 === candy2 && candy2 === candy3) {
+                matched.push(idx, idx + 1, idx + 2);
+            }
+        }
+    }
+    for (let c = 0; c < gridSize; c++) {
+        for (let r = 0; r < gridSize - 2; r++) {
+            let idx = r * gridSize + c;
+            let candy1 = grid[idx].querySelector("img")?.src;
+            let candy2 = grid[idx + gridSize].querySelector("img")?.src;
+            let candy3 = grid[idx + 2 * gridSize].querySelector("img")?.src;
+            if (candy1 && candy2 && candy3 && candy1 === candy2 && candy2 === candy3) {
+                matched.push(idx, idx + gridSize, idx + 2 * gridSize);
+            }
+        }
+    }
+    return [...new Set(matched)];
+}
+
+function processBoard() {
+    let matches = findMatches();
+    if (matches.length > 0) {
+        score += matches.length * 10;
+        document.getElementById("score").innerText = "Puntos: " + score;
+        matches.forEach(i => {
+            createParticles(grid[i]);
+            let img = grid[i].querySelector("img");
+            if (img) img.remove();
+        });
+        setTimeout(() => {
+            applyGravity();
+            refillBoard();
+            processBoard();
+        }, 300);
+    }
+}
+
+function applyGravity() {
+    for (let c = 0; c < gridSize; c++) {
+        let emptySpot = gridSize - 1;
+        for (let r = gridSize - 1; r >= 0; r--) {
+            let idx = r * gridSize + c;
+            if (!grid[idx].querySelector("img")) continue;
+            if (emptySpot !== r) {
+                let currentImg = grid[idx].querySelector("img");
+                if (currentImg) {
+                    grid[emptySpot * gridSize + c].appendChild(currentImg);
+                }
+            }
+            emptySpot--;
+        }
+        for (let r = emptySpot; r >= 0; r--) {
+            let idx = r * gridSize + c;
+            let img = grid[idx].querySelector("img");
+            if (img) img.remove();
+        }
+    }
+}
+
+function refillBoard() {
+    grid.forEach(cell => { if (!cell.querySelector("img")) addRandomCandy(cell); });
+}
+
+// Partículas
+function createParticles(cell) {
+    const colors = ["#fff176", "#ff8a80", "#80d8ff", "#b9f6ca", "#ff4081", "#ffea00", "#00e676", "#651fff"];
+    for (let i = 0; i < 8; i++) {
+        let particle = document.createElement("div");
+        particle.style.position = "absolute";
+        particle.style.width = "10px";
+        particle.style.height = "10px";
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.borderRadius = "50%";
+        particle.style.left = "50%";
+        particle.style.top = "50%";
+        particle.style.opacity = "1";
+        particle.style.transform = "translate(-50%, -50%)";
+        particle.style.transition = "all 0.8s ease-out";
+        cell.appendChild(particle);
+
+        setTimeout(() => {
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.opacity = "0";
+        }, 10);
+
+        setTimeout(() => particle.remove(), 800);
+    }
+}
+
+// Drag falso
+let startCell = null;
+document.addEventListener("mousedown", e => {
+    const cell = e.target.closest(".cell");
+    if (cell) {
+        startCell = cell;
+        cell.classList.add("pressed");
+    }
+});
+document.addEventListener("mouseup", e => {
+    const targetCell = e.target.closest(".cell");
+    if (startCell && targetCell && startCell !== targetCell) {
+        swapCandies(startCell, targetCell);
+        processBoard();
+    }
+    if (startCell) startCell.classList.remove("pressed");
+    startCell = null;
+});
+
+// Touch
+let touchStartCell = null;
+document.addEventListener("touchstart", e => {
+    const cell = e.target.closest(".cell");
+    if (cell) {
+        touchStartCell = cell;
+        cell.classList.add("pressed");
+    }
+});
+document.addEventListener("touchend", e => {
+    const touch = e.changedTouches[0];
+    const targetCell = document.elementFromPoint(touch.clientX, touch.clientY)?.closest(".cell");
+    if (touchStartCell && targetCell && touchStartCell !== targetCell) {
+        swapCandies(touchStartCell, targetCell);
+        processBoard();
+    }
+    if (touchStartCell) touchStartCell.classList.remove("pressed");
+    touchStartCell = null;
+});
+
+// Swap
+function swapCandies(a, b) {
+    const imgA = a.querySelector("img");
+    const imgB = b.querySelector("img");
+    if (imgA && imgB) {
+        const temp = imgA.src;
+        imgA.src = imgB.src;
+        imgB.src = temp;
+    }
+}
+
+// Posicionar la mano siempre relativa al tablero
+function positionTutorialHand() {
+    const hand = document.getElementById("tutorial-hand");
+    const container = document.getElementById("game-container");
+
+    const containerRect = container.getBoundingClientRect();
+    const handWidth = hand.offsetWidth;
+    const handHeight = hand.offsetHeight;
+
+    hand.style.left = `${containerRect.width * 0.20 - handWidth / 2}px`;
+    hand.style.top = `${containerRect.height * 0.20 - handHeight / 2}px`;
+}
+
+// Ocultar tutorial al primer movimiento
+function hideTutorial() {
+    const hand = document.getElementById("tutorial-hand");
+    if (hand) hand.style.display = "none";
+}
+document.addEventListener("mousedown", hideTutorial, { once: true });
+document.addEventListener("touchstart", hideTutorial, { once: true });
+
+// Recalcular posición en resize
+window.addEventListener("resize", positionTutorialHand);
+
+createBoard();

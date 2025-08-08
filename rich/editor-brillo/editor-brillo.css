@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.banner-container {
+    position: relative;
+    width: 850px;
+    height: 480px; /* Mantiene tamaño del banner */
+    overflow: hidden;
+}
+
+/* Fondo */
+#banner-fondo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 1;
+}
+
+/* Wrapper del descuento */
+.banner-descuento-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+    pointer-events: none;
+}
+
+/* Imagen del descuento */
+#banner-descuento {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Slider */
+.slider-container {
+    position: absolute;
+    top: 40%;
+    left: 50.2%;
+    transform: translate(-50%, -50%) perspective(900px) rotateX(12deg) rotateY(-20deg) skewX(8deg) skewY(-1deg);
+    width: 69px;
+    height: 133px;
+    background: #333;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(68, 68, 68, 0.3);
+    border-radius: 15px;
+    z-index: 2;
+}
+
+.slider-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(to top, #555, #ffffff);
+    transition: height 0.1s;
+    z-index: 3;
+}
+
+.sun-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    z-index: 5;
+}
+
+.sun-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: #FFD000;
+    stroke-width: 4px;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.8));
+}

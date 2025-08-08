@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Brillo sobre Banner</title>
+    <script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+    <link rel="stylesheet" href="editor-brillo.css">
+</head>
+
+<body>
+    <div class="banner-container">
+        <img id="banner-fondo" src="banner-fondo.png" alt="Banner Fondo">
+
+        <!-- Nuevo wrapper que contiene la imagen de descuento -->
+        <div class="banner-descuento-wrapper">
+            <img id="banner-descuento" src="banner-descuento.png" alt="Banner Descuento">
+        </div>
+
+        <!-- Slider -->
+        <div class="slider-container" id="slider">
+            <div class="slider-track">
+                <div class="slider-fill" id="fill"></div>
+            </div>
+            <div class="sun-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="10" />
+                    <line x1="32" y1="6" x2="32" y2="16" />
+                    <line x1="32" y1="48" x2="32" y2="58" />
+                    <line x1="6" y1="32" x2="16" y2="32" />
+                    <line x1="48" y1="32" x2="58" y2="32" />
+                    <line x1="14" y1="14" x2="20" y2="20" />
+                    <line x1="44" y1="44" x2="50" y2="50" />
+                    <line x1="14" y1="50" x2="20" y2="44" />
+                    <line x1="44" y1="20" x2="50" y2="14" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script src="editor-brillo.js"></script>
+</body>
+
+</html>
